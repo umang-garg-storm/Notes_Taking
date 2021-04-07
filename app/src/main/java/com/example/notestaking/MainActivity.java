@@ -6,6 +6,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,12 +16,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.notestaking.model.Adapter;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle toggle;
     NavigationView nav_view;
+    RecyclerView noteListsRecycler;
+    Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        // Created Objects for RecyclerView
+        noteListsRecycler = findViewById(R.id.notelistRecycler);
 
         // Created Objects
         drawerLayout = findViewById(R.id.drawer);
@@ -36,6 +47,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(true);
         toggle.syncState();
+        // created Sample data for Adapter to display in recycler view//
+        List<String> titles = new ArrayList<>();
+        List<String> content = new ArrayList<>();
+
+        titles.add("Note Title. (1)");
+        content.add("Note Content(1)");
+
+        titles.add("Note Title. (2)");
+        content.add("Note Content(2)");
+
+        titles.add("Note Title. (3)");
+        content.add("Note Content(3)");
+
+        titles.add("Note Title. (4)");
+        content.add("Note Content(4)");
+
+        //Created Object for adapter variable above
+        adapter = new Adapter(titles,content);
+        // A LayoutManager that lays out children in a staggered grid formation.
+        // It supports horizontal & vertical layout as well as an ability to layout children in reverse.
+        noteListsRecycler.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        noteListsRecycler.setAdapter(adapter);
     }
 
     @Override
