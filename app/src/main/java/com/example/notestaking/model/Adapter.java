@@ -1,5 +1,6 @@
 package com.example.notestaking.model;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.notestaking.NoteDetailActivity;
 import com.example.notestaking.R;
 
 import java.util.ArrayList;
@@ -44,7 +46,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "The Item is Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(), "The Item is Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(), NoteDetailActivity.class);
+                v.getContext().startActivity(intent);
             }
         });
 
