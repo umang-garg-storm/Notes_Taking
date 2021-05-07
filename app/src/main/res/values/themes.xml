@@ -28,4 +28,13 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.NotesTaking.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.NotesTaking.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.NotesTaking.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>
