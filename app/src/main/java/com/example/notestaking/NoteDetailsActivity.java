@@ -4,13 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 public class NoteDetailsActivity extends AppCompatActivity {
+    Intent data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +22,17 @@ public class NoteDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_note_details);
         Toolbar toolbar = findViewById(R.id.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        data = getIntent();
+
+        TextView content = findViewById(R.id.noteDetailsContent);
+        TextView title = findViewById(R.id.noteDetailsTitle);
+        content.setMovementMethod(new ScrollingMovementMethod());
+
+        content.setText(data.getStringExtra("content"));
+        title.setText(data.getStringExtra("title"));
+        content.setBackgroundColor(getResources().getColor(data.getIntExtra("code",0),null));
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener((view) -> {

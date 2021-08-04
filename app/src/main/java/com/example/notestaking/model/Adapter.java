@@ -21,8 +21,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     List<String> titles;
     List<String> content;
 
-    public Adapter(List<String> titles, List<String> content) {
-        this.titles = titles;
+    public Adapter(List<String> title,List<String> content){
+        this.titles = title;
         this.content = content;
     }
 
@@ -30,45 +30,47 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_view_layout,parent,false);
-        return new ViewHolder(view); // to create the view for recyclerview to display data //
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         // bind actual data recived from main Activity and bind it to the views assigned down wards
-         holder.noteTitle.setText(titles.get(position));
-         holder.noteContent.setText(content.get(position));
-         // To set Background Color for CardView
-        holder.mCardView.setCardBackgroundColor(holder.view.getResources().getColor(getRandomColor(),null));
+        holder.noteTitle.setText(titles.get(position));
+        holder.noteContent.setText(content.get(position));
+        final int code = getRandomColor();
+        // To set Background Color for CardView
+        holder.mCardView.setCardBackgroundColor(holder.view.getResources().getColor(code,null));
         // to get Random color Automatic
         // to display message for clicking particular views in recyclerview
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(v.getContext(), "The Item is Clicked", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(v.getContext(), NoteDetailsActivity.class);
-                v.getContext().startActivity(intent);
+                Intent i = new Intent(v.getContext(), NoteDetailsActivity.class);
+                i.putExtra("code",code);
+                v.getContext().startActivity(i);
             }
         });
-
     }
+
     private int getRandomColor() {
-        // Method for getting Random Color code form colors.xml
+
         List<Integer> colorCode = new ArrayList<>();
-        colorCode.add(R.color.purple_200);
-        colorCode.add(R.color.purple_500);
-        colorCode.add(R.color.purple_700);
-        colorCode.add(R.color.teal_200);
-        colorCode.add(R.color.teal_700);
-        colorCode.add(R.color.white);
+        colorCode.add(R.color.blue);
+        colorCode.add(R.color.yellow);
+        colorCode.add(R.color.skyblue);
+        colorCode.add(R.color.lightPurple);
+        colorCode.add(R.color.lightGreen);
+        colorCode.add(R.color.gray);
+        colorCode.add(R.color.pink);
         colorCode.add(R.color.red);
-        colorCode.add(R.color.dark_Purple);
-        colorCode.add(R.color.light_pink);
-        colorCode.add(R.color.does_not);
+        colorCode.add(R.color.greenlight);
+        colorCode.add(R.color.notgreen);
 
         Random randomColor = new Random(); // Created Random Class for Random Selection of Colors....//
         int number = randomColor.nextInt(colorCode.size());
         return colorCode.get(number);
+
     }
 
     @Override
@@ -89,9 +91,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             noteTitle = itemView.findViewById(R.id.titles);
             noteContent = itemView.findViewById(R.id.content);
             view = itemView;
-            //assigning XML Resources for CardView
             mCardView = itemView.findViewById(R.id.noteCard);
-
+            //assigning XML Resources for CardView
         }
     }
 }
